@@ -63,6 +63,16 @@ const App: React.FC = () => {
         fa: { message: 'نام خانوادگی' },
       },
     },
+    {
+      key: 'logo',
+      identifier: FormFieldIdentifier.FILE,
+      label: 'Logo',
+      url: 'http://localhost:8080/api/v1/media',
+      locale: {
+        en: { message: 'Logo' },
+        fa: { message: 'لوگو' },
+      },
+    },
     // Add other fields as necessary
   ];
 
