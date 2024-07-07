@@ -117,7 +117,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <DynamicForm
+      <UnionForm
         target={target}
         fields={fields}
         onUpdateValidations={setValidations}
