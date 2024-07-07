@@ -1,3 +1,4 @@
+// src/FormTypes.ts
 export enum FormFieldIdentifier {
   TEXT = 'text',
   NUMBER = 'number',
@@ -22,6 +23,10 @@ export interface ValidationRule {
   validate?: (value: any) => boolean | string;
 }
 
+export interface LocaleMessages {
+  [key: string]: { message: string };
+}
+
 export interface FormField {
   key: string;
   identifier: FormFieldIdentifier;
@@ -32,6 +37,9 @@ export interface FormField {
   items?: { value: string; title: string }[];
   rules?: ValidationRule[];
   vIf?: ValidationCriteria;
+  multiple?: boolean;
+  tagInput?: boolean;
+  locale?: LocaleMessages;
 }
 
 export interface FormProps {
@@ -39,4 +47,5 @@ export interface FormProps {
   fields: FormField[];
   onUpdateValidations: (validations: { [key: string]: any }) => void;
   onUpdateIsValid: (isValid: boolean) => void;
+  locale?: string;
 }

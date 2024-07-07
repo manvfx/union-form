@@ -23,109 +23,60 @@ Here is an example of how to use the UnionForm component in a React application:
 ```bash
 
 import React, { useState } from 'react';
-import { UnionForm } from '@union/form';
-import { FormField } from '@union/form/dist/FormTypes';
+import { DynamicForm, FormFieldIdentifier } from '@union/form';
 
 const App: React.FC = () => {
-  const [target, setTarget] = useState({
+  const [formState, setFormState] = useState({
     firstName: 'Amin Najafi',
-    age: 35,
+    age: 36,
     address: 'New York!',
   });
 
   const [validations, setValidations] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const fields: FormField[] = [
+  const fields = [
     {
       key: 'firstName',
-      identifier: 'text',
+      identifier: FormFieldIdentifier.TEXT,
       label: 'First Name',
       preemptWidth: 6,
+      locale: {
+        en: { message: 'First Name' },
+        fa: { message: 'نام' },
+      },
       rules: [
         {
           criteria: { $ne: 'Bye' },
           message: 'First name must not be Bye!',
         },
-        {
-          validate: v => v === 'Hello' || 'First name must be hello!',
-        },
+        (v) => v === 'Hello' || 'First name must be Hello!',
       ],
     },
     {
       key: 'lastName',
-      identifier: 'text',
+      identifier: FormFieldIdentifier.TEXT,
       label: 'Last Name',
       preemptWidth: 6,
+      locale: {
+        en: { message: 'Last Name' },
+        fa: { message: 'نام خانوادگی' },
+      },
     },
-    {
-      key: 'email',
-      identifier: 'text',
-      label: 'Email',
-      width: 6,
-    },
-    {
-      key: 'age',
-      identifier: 'number',
-      label: 'Age',
-      width: 6,
-      rules: [
-        {
-          validate: v => v < 19 || 'Age must be less than 19',
-        },
-        {
-          validate: v => v > 3 || 'Age must be more than 3',
-        },
-      ],
-    },
-    {
-      key: 'previousAge',
-      identifier: 'text',
-      label: 'Previous Age',
-      width: 6,
-      rules: [
-        {
-          validate: v => /^\d+$/.test(v) || 'You must only enter digits',
-        },
-      ],
-    },
-    {
-      vIf: { age: { $gte: 18 } },
-      key: 'address',
-      identifier: 'textarea',
-      label: 'Address',
-      width: 12,
-      rows: 8,
-    },
-    {
-      key: 'acceptance',
-      identifier: 'checkbox',
-      label: 'Agree to terms and conditions',
-    },
-    {
-      vIf: { acceptance: true },
-      key: 'services',
-      identifier: 'checkboxes',
-      label: 'Services',
-      items: [
-        { value: 'home1', title: 'Home 1' },
-        { value: 'home2', title: 'Home 2' },
-        { value: 'home3', title: 'Home 3' },
-      ],
-    },
+    // Add other fields as necessary
   ];
 
   return (
-    <div className="App">
-      <UnionForm
-        target={target}
-        fields={fields}
-        onUpdateValidations={setValidations}
-        onUpdateIsValid={setIsValid}
-      />
-    </div>
+    <UnionForm
+      target={formState}
+      fields={fields}
+      onUpdateValidations={setValidations}
+      onUpdateIsValid={setIsValid}
+      locale="fa" // Change to "en" for English
+    />
   );
 };
 
 export default App;
+
 ```

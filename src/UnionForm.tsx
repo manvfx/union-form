@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FormField, FormProps, ValidationCriteria } from './FormTypes';
+import { FormField, FormProps, ValidationCriteria, FormFieldIdentifier } from './FormTypes';
 import TextElement from './elements/text-element';
 import NumberElement from './elements/number-element';
 import TextareaElement from './elements/textarea-element';
@@ -9,7 +9,7 @@ import RadioButtonElement from './elements/radio-button-element';
 import SelectElement from './elements/select-element';
 import './index.css';
 
-const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, onUpdateIsValid }) => {
+const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, onUpdateIsValid, locale = 'en' }) => {
     const [formState, setFormState] = useState(target);
     const [validations, setValidations] = useState<{ [key: string]: any }>({});
     const [isValid, setIsValid] = useState<boolean>(false);
@@ -70,22 +70,31 @@ const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, o
 
     const renderField = (field: FormField) => {
         const value = formState[field.key] || '';
+        const label = field.locale && field.locale[locale] ? field.locale[locale].message : field.label;
 
         switch (field.identifier) {
-            case 'text':
+            case FormFieldIdentifier.TEXT:
                 return <TextElement value={value} onChange={(val) => handleChange(field.key, val)} />;
-            case 'number':
+            case FormFieldIdentifier.NUMBER:
                 return <NumberElement value={Number(value)} onChange={(val) => handleChange(field.key, val)} />;
-            case 'textarea':
+            case FormFieldIdentifier.TEXTAREA:
                 return <TextareaElement value={value} rows={field.rows} onChange={(val) => handleChange(field.key, val)} />;
-            case 'checkbox':
+            case FormFieldIdentifier.CHECKBOX:
                 return <CheckboxElement checked={!!value} onChange={(val) => handleChange(field.key, val)} />;
-            case 'checkboxes':
+            case FormFieldIdentifier.CHECKBOXES:
                 return <CheckboxesElement value={value as string[]} items={field.items || []} onChange={(val) => handleChange(field.key, val)} />;
-            case 'radio':
+            case FormFieldIdentifier.RADIO:
                 return <RadioButtonElement value={value} items={field.items || []} onChange={(val) => handleChange(field.key, val)} />;
-            case 'select':
-                return <SelectElement value={value} items={field.items || []} onChange={(val) => handleChange(field.key, val)} />;
+            case FormFieldIdentifier.SELECT:
+                return (
+                    <SelectElement
+                        value={value}
+                        items={field.items || []}
+                        onChange={(val) => handleChange(field.key, val)}
+                        multiple={field.multiple}
+                        tagInput={field.tagInput}
+                    />
+                );
             default:
                 return null;
         }
@@ -97,9 +106,11 @@ const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, o
                 const showField = field.vIf ? Object.keys(field.vIf).every(key => validateCriteria(key as keyof ValidationCriteria, field.vIf![key], formState[key])) : true;
                 if (!showField) return null;
 
+                const label = field.locale && field.locale[locale] ? field.locale[locale].message : field.label;
+
                 return (
                     <div key={field.key} className={`w-full md:w-${field.width || 12}/12`}>
-                        <label>{field.label}</label>
+                        <label>{label}</label>
                         {renderField(field)}
                         {validations[field.key] && <div className="error-class">{validations[field.key]}</div>}
                     </div>
