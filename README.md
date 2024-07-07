@@ -30,6 +30,7 @@ const App: React.FC = () => {
     firstName: 'Amin Najafi',
     age: 36,
     address: 'New York!',
+    logo: '',
   });
 
   const [validations, setValidations] = useState({});
