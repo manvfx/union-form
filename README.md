@@ -24,7 +24,7 @@ Here is an example of how to use the UnionForm component in a React application:
 
 import React, { useState } from 'react';
 import { UnionForm } from '@union/form';
-import { FormField } from '@arya/form/dist/FormTypes';
+import { FormField } from '@union/form/dist/FormTypes';
 
 const App: React.FC = () => {
   const [target, setTarget] = useState({
