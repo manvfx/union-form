@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dynamic-form.ltr {
+  direction: ltr;
+}
+
+.dynamic-form.rtl {
+  direction: rtl;
+}
+
+.dynamic-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.error-class {
+  color: red;
+}

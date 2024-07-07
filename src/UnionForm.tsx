@@ -7,9 +7,10 @@ import CheckboxElement from './elements/checkbox-element';
 import CheckboxesElement from './elements/checkboxes-element';
 import RadioButtonElement from './elements/radio-button-element';
 import SelectElement from './elements/select-element';
+import FileElement from './elements/file-element';
 import './index.css';
 
-const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, onUpdateIsValid, locale = 'en' }) => {
+const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, onUpdateIsValid, locale = 'en', direction = 'ltr' }) => {
     const [formState, setFormState] = useState(target);
     const [validations, setValidations] = useState<{ [key: string]: any }>({});
     const [isValid, setIsValid] = useState<boolean>(false);
@@ -55,7 +56,6 @@ const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, o
                 return value >= criteriaValue;
             case '$lte':
                 return value <= criteriaValue;
-            // Add more criteria as needed
             default:
                 return true;
         }
@@ -95,13 +95,15 @@ const UnionForm: React.FC<FormProps> = ({ target, fields, onUpdateValidations, o
                         tagInput={field.tagInput}
                     />
                 );
+            case FormFieldIdentifier.FILE:
+                return <FileElement value={value} url={field.url!} onChange={(val) => handleChange(field.key, val)} />;
             default:
                 return null;
         }
     };
 
     return (
-        <form>
+        <form className={`dynamic-form ${direction}`}>
             {fields.map(field => {
                 const showField = field.vIf ? Object.keys(field.vIf).every(key => validateCriteria(key as keyof ValidationCriteria, field.vIf![key], formState[key])) : true;
                 if (!showField) return null;

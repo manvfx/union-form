@@ -6,7 +6,8 @@ export enum FormFieldIdentifier {
   CHECKBOX = 'checkbox',
   CHECKBOXES = 'checkboxes',
   RADIO = 'radio',
-  SELECT = 'select'
+  SELECT = 'select',
+  FILE = 'file'
 }
 
 export interface ValidationCriteria {
@@ -40,6 +41,7 @@ export interface FormField {
   multiple?: boolean;
   tagInput?: boolean;
   locale?: LocaleMessages;
+  url?: string;
 }
 
 export interface FormProps {
@@ -48,4 +50,5 @@ export interface FormProps {
   onUpdateValidations: (validations: { [key: string]: any }) => void;
   onUpdateIsValid: (isValid: boolean) => void;
   locale?: string;
+  direction?: 'ltr' | 'rtl';
 }
