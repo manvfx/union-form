@@ -1,7 +1,7 @@
 {
-  "name": "@union/form",
-  "version": "1.0.0",
-  "description": "",
+  "name": "union-form",
+  "version": "1.0.2",
+  "description": "Union form handling operations for your React.js applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/manvfx/union-form.git"
   },
-  "keywords": [],
+  "keywords": ["react,react-hook-form,form,tailwind,css"],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -30,5 +30,8 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

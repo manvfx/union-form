@@ -1,6 +1,6 @@
-# @union/form
+# union-form
 
-`@union/form` is a dynamic form component for React with TypeScript and Tailwind CSS. It allows you to create flexible and configurable forms with built-in validation.
+`union-form` is a dynamic form component for React with TypeScript and Tailwind CSS. It allows you to create flexible and configurable forms with built-in validation.
 
 ## Features
 
@@ -14,7 +14,7 @@
 Install the package via npm:
 
 ```bash
-npm install @union/form
+npm install union-form
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ Here is an example of how to use the UnionForm component in a React application:
 ```bash
 
 import React, { useState } from 'react';
-import { DynamicForm, FormFieldIdentifier } from '@union/form';
+import { DynamicForm, FormFieldIdentifier } from 'union-form';
 
 const App: React.FC = () => {
   const [formState, setFormState] = useState({
